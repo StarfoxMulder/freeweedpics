@@ -3,7 +3,9 @@ A central place for people to share Creative Commons, fair use, high quality ima
 "The place for pot pics" - Ev
 
 
-# stockpotimages.com, upsplash (check this out!), kind of hipster feel
+# stockpotimages.com, unsplash (check this out!), kind of hipster feel
+## Unsplash opens a modal when img is clicked
+## Unsplash has a popup generating html for including photo credit
 # Just Ev's pictures right now
 # -- search bar front and center on home/landing page
 # adjust number of results displaying per page

@@ -4,14 +4,33 @@ var path = require('path');
 var server = require('http').createServer(app);
 var axios = require('axios');
 var querystring = require('querystring');
+var cloudinary = require('cloudinary');
 
 require('dotenv').config();
+
+cloudinary.config({ 
+  cloud_name: 'freeweedpics', 
+  api_key: '936646858396893', 
+  api_secret: 'biTDnB7Mxnxz5X2KP2WJhYKM8fM' 
+});
 
 var bodyParser = require('body-parser');
 app.use( bodyParser.json() );
 
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname + '/index.html'));
+});
+app.get('/upload', function(req, res) {
+  res.sendFile(path.join(__dirname + '/upload.html'));
+});
+app.get('/evelyn', function(req, res) {
+  res.sendFile(path.join(__dirname + '/evelyn.html'));
+
+/***** This is the correct syntax for posting an img
+  cloudinary.uploader.upload("./public/weedBkg1.jpg", function(result) { 
+    console.log(result) 
+  });
+*/
 });
 
 var instance = axios.create({

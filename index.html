@@ -3,23 +3,24 @@
 <head>
     <meta charset="utf-8">
     <meta name="referrer" content="never" />
-    <title>Vue.js Poster Shop</title>
-    <link rel="icon" href="public/favicon.ico" type="image/x-icon">
+    <title>Free Weed Pics</title>
+    <link rel="icon" href="public/fwpIconBase.png" type="image/x-icon">
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Luckiest+Guy" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato|Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cabin+Condensed|Fugaz+One|Shrikhand" rel="stylesheet">
+    
 
     <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="public/style.css">
+    <link rel="stylesheet" type="text/css" href="public/main.css">
 </head>
 <body>
 <div id="app" v-cloak>
     <div class="header">
-        <h1>Hollywood Bryan's Mystery Shop</h1>
+        <h1>free weed pics</h1>
         <form class="searchbar" v-on:submit.prevent="onSubmit">
-            <input v-model="newSearch" placeholder="ie: Super Delux Wishing Wand" type="">
+            <input v-model="newSearch" placeholder="ie: Northern Lights; Super Lemon Haze" type="">
             <input type="submit" class="btn">
         </form>
     </div>
