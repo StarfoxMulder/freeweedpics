@@ -7,6 +7,7 @@ var querystring = require('querystring');
 var cloudinary = require('cloudinary');
 
 require('dotenv').config();
+app.use(express.static("./public"));
 
 cloudinary.config({ 
   cloud_name: 'freeweedpics', 
