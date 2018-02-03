@@ -1,6 +1,7 @@
 var express  = require('express');
 var app      = express();
 var port     = process.env.PORT || 3030;
+var exphbs = require('express-handlebars');
 var path     = require('path');
 var server   = require('http').createServer(app);
 var axios    = require('axios');
@@ -16,9 +17,25 @@ var bodyParser   = require('body-parser');
 var session      = require('express-session');
 
 // Configuration ==============
-mongoose.connect(configDB.url); // connect to database
+//mongoose.connect(configDB.url); // connect to database
 
-// require('./config/passport')(passport); // pass passport for configuration
+var databaseUri = "mongodb://localhost/freeweedpics";
+if (process.env.MONGODB_URI) {
+  mongoose.connect(process.env.MONGODB_URI);
+} else {
+  mongoose.connect(databaseUri);
+}
+
+var db = mongoose.connection;
+db.on("error", function(error) {
+  console.log("Mongoose Error: ", error);
+});
+// Once logged in to the db through mongoose, log a success message
+db.once("open", function() {
+  console.log("Mongoose connection successful.");
+});
+
+require('./config/passport.js')(passport); // pass passport for configuration
 
 require('dotenv').config();
 //app.use(express.static("./public"));
@@ -44,27 +61,11 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 // routes ======================================================================
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
-
-
-
 var instance = axios.create({
   baseURL: 'https://api.imgur.com/3/',
   headers: { 'Authorization': 'Client-ID ' + process.env.IMGUR_CLIENT_ID }
 });
 
-/*
-app.get('/search/:query', function(req, res) {
-  const url = 'gallery/search/top/0/?' + querystring.stringify({ q: req.params.query });
-  instance.get(url)
-    .then(function (result) {
-      res.send(result.data.data.filter(item => !item.is_album && !item.animated));
-    })
-    .catch(function (error) {
-      console.log(error);
-    })
-  ;
-});
-*/
 
 app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
 app.use('/public', express.static(path.join(__dirname, 'public')));
@@ -76,3 +77,5 @@ if (process.env.NODE_ENV !== 'production') {
 // launch ======================================================================
 app.listen(port);
 console.log("I got bags of funk and I sell'em by the ton on port " + port);
+
+//nodemon server.js

@@ -1,4 +1,3 @@
-/*
 var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');
 //var Schema = mongoose.Schema;
@@ -27,4 +26,3 @@ var User = mongoose.model("User", userSchema);
 
 // Export the model
 module.exports = User;
-*/

@@ -1,5 +1,6 @@
 module.exports = function(app, passport) {
-
+  var path     = require('path');
+  
   app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/views/index.html'));
   });
@@ -7,7 +8,7 @@ module.exports = function(app, passport) {
     res.sendFile(path.join(__dirname + '/views/upload.html'));
   });
   app.get('/evelyn', function(req, res) {
-    res.sendFile(path.join(__dirname + '/views/evelyn.html'));
+    res.sendFile(path.join(__dirname + '/evelyn.html'));
 
   /***** This is the correct syntax for posting an img
     cloudinary.uploader.upload("./public/weedBkg1.jpg", function(result) { 
@@ -18,6 +19,11 @@ module.exports = function(app, passport) {
   app.get('/dashboard', isLoggedIn, function(req, res) {
     res.sendFile(path.join(__dirname + '/views/dashboard.html'));    
   });
+
+  app.post('/signup', passport.authenticate('local-signup', {
+    successRedirect : '/dashboard', // redirect to the secure dashboard section
+    failureRedirect : '/signup' // redirect back to the signup page if there is an error
+  }));
 };
 
 // route middleware to make sure a user is logged in
