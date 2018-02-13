@@ -1,7 +1,8 @@
 var express  = require('express');
 var app      = express();
+var router   = express.Router();
 var port     = process.env.PORT || 3030;
-var exphbs = require('express-handlebars');
+var exphbs   = require('express-handlebars');
 var path     = require('path');
 var server   = require('http').createServer(app);
 var axios    = require('axios');
@@ -46,6 +47,11 @@ cloudinary.config({
   api_secret: 'biTDnB7Mxnxz5X2KP2WJhYKM8fM' 
 });
 
+//Setting up handlebars
+app.engine('handlebars', exphbs({
+  defaultLayout: 'main'
+}));
+app.set('view engine', 'handlebars');
 
 var bodyParser = require('body-parser');
 app.use( bodyParser.json() );
@@ -73,6 +79,15 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 if (process.env.NODE_ENV !== 'production') {
   require('reload')(server, app);
 }
+
+
+var routes = require('./app/routes.js')(app, passport);
+app.use('/', routes);
+app.use('/evelyn', routes);
+app.use('/upload', routes);
+app.use('/dashboard', routes);
+app.use('/signup', routes);
+
 
 // launch ======================================================================
 app.listen(port);
